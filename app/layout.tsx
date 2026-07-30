@@ -24,7 +24,7 @@ const RootLayout = async ({
   children: React.ReactNode;
 }>) => {
   const user = await getMe();
-  console.log(user, "user");
+
   return (
     <html
       lang="en"
@@ -37,7 +37,7 @@ const RootLayout = async ({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <Toaster position="top-right" />
+        <Toaster position="top-right" richColors />
         <Navbar user={user} />
         <main>{children}</main>
       </body>

@@ -35,11 +35,11 @@ const ProfileDropDownMenu = ({ user }: INavbarProps) => {
 
       case "dashboard":
         if (user.data.role === "ADMIN") {
-          redirect("/admin-dashboard");
+          return redirect("/admin-dashboard");
         } else if (user.data.role === "PROVIDER") {
-          redirect("/provider-dashboard");
+          return redirect("/provider-dashboard");
         } else if (user.data.role === "CUSTOMER") {
-          redirect("/dashboard");
+          return redirect("/dashboard");
         }
         break;
 

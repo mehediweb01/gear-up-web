@@ -1,7 +1,9 @@
 import Navbar from "@/components/shared/navbar/Navbar";
 import { cn } from "@/lib/utils";
+import { getMe } from "@/service/getMe";
 import type { Metadata } from "next";
 import { DM_Sans, Montserrat } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const montserratHeading = Montserrat({
@@ -16,11 +18,13 @@ export const metadata: Metadata = {
   description: "GearUp - Home",
 };
 
-const RootLayout = ({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const user = await getMe();
+  console.log(user, "user");
   return (
     <html
       lang="en"
@@ -33,7 +37,8 @@ const RootLayout = ({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
+        <Toaster position="top-right" />
+        <Navbar user={user} />
         <main>{children}</main>
       </body>
     </html>

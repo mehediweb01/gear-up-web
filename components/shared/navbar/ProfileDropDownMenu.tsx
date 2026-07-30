@@ -8,24 +8,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { logOut } from "@/service/logOut";
 import { LogOut, User } from "lucide-react";
+import { redirect } from "next/navigation";
+import { INavbarProps } from "./Navbar";
 
 export const dropDownItems = [
   {
     id: 1,
-    action: "MyProfile",
+    action: "my-profile",
     title: "My Profile",
   },
   {
     id: 2,
-    action: "Dashboard",
+    action: "dashboard",
     title: "Dashboard",
   },
 ];
 
-const ProfileDropDownMenu = () => {
-  const handleAction = (action: string) => {
-    console.log(action);
+const ProfileDropDownMenu = ({ user }: INavbarProps) => {
+  const handleAction = async (action: string) => {
+    switch (action) {
+      case "singOut":
+        await logOut();
+        break;
+
+      case "dashboard":
+        if (user.data.role === "ADMIN") {
+          redirect("/admin-dashboard");
+        } else if (user.data.role === "PROVIDER") {
+          redirect("/provider-dashboard");
+        } else if (user.data.role === "CUSTOMER") {
+          redirect("/dashboard");
+        }
+        break;
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -36,9 +56,9 @@ const ProfileDropDownMenu = () => {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuGroup>
           <DropdownMenuLabel className="flex flex-col gap-1 px-1.5 py-1">
-            <span>Guest User</span>
+            <span>{user.data?.name || "guest"}</span>
             <span className="text-xs font-normal text-muted-foreground">
-              guest@example.com
+              {user.data?.email || "guest@gmail.com"}
             </span>
           </DropdownMenuLabel>
         </DropdownMenuGroup>

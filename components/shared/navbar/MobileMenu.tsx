@@ -1,5 +1,5 @@
 import NavLinks from "./NavLinks";
-import SignInSignOut from "./SignInSignOut";
+import SignInSignOut from "./SignInSignUp";
 
 const MobileMenu = ({ mobileMenuOpen }: { mobileMenuOpen: boolean }) => {
   return (

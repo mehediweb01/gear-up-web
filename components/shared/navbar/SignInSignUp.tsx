@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const SignInSignOut = () => {
+const SignInSignUp = () => {
   const pathname = usePathname();
 
   return (
@@ -29,4 +29,4 @@ const SignInSignOut = () => {
   );
 };
 
-export default SignInSignOut;
+export default SignInSignUp;

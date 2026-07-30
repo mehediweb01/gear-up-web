@@ -25,8 +25,10 @@ const NavLinks = () => {
         <Link
           key={item.id}
           href={item.href}
-          className={`block px-4 py-2 hover:text-blue-500 text-gray-700 hover:bg-gray-50 cursor-pointer transition-all duration-300 ${
-            pathname === item.href ? "bg-gray-50 rounded-md" : ""
+          className={`block px-4 py-2 hover:text-blue-500 text-gray-700 hover:bg-gray-100 hover:rounded-md cursor-pointer transition-all duration-300 ${
+            pathname === item.href
+              ? "bg-gray-100 text-blue-500! hover:bg-gray-100 rounded-md"
+              : ""
           } 
         `}
         >

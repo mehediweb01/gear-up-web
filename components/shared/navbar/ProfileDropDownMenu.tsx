@@ -43,6 +43,10 @@ const ProfileDropDownMenu = ({ user }: INavbarProps) => {
         }
         break;
 
+      case "my-profile":
+        redirect("/me");
+        break;
+
       default:
         break;
     }

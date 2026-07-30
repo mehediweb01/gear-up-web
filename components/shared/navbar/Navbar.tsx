@@ -20,6 +20,7 @@ export type TUser = {
     address: string;
     role: string;
     status: string;
+    createdAt: Date;
   };
 };
 

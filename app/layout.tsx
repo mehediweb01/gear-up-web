@@ -1,3 +1,4 @@
+import Navbar from "@/components/shared/navbar/Navbar";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { DM_Sans, Montserrat } from "next/font/google";
@@ -31,7 +32,10 @@ const RootLayout = ({
         montserratHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        <main>{children}</main>
+      </body>
     </html>
   );
 };

@@ -17,7 +17,7 @@ const GearGrid = ({ gears }: GearsProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {gears.data.map((item) => {
-          const totalRating = item.reviews.reduce(
+          const totalRating = item?.reviews?.reduce(
             (acc, curr) => acc + curr.rating,
             0,
           );
@@ -52,15 +52,15 @@ const GearGrid = ({ gears }: GearsProps) => {
                     <div className="flex items-center">
                       {Array.from({ length: 5 }).map((_, i) => {
                         return (
-                            <Star
-                              key={i}
-                              size={14}
-                              className={
-                                i < Math.floor(rating)
-                                  ? "fill-yellow-400 text-yellow-400"
-                                  : "text-gray-300"
-                              }
-                            />
+                          <Star
+                            key={i}
+                            size={14}
+                            className={
+                              i < Math.floor(rating)
+                                ? "fill-yellow-400 text-yellow-400"
+                                : "text-gray-300"
+                            }
+                          />
                         );
                       })}
                       <span>{rating || 0}</span>

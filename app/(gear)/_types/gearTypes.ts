@@ -19,11 +19,34 @@ export type TGear = {
     address: string;
   };
   reviews: Reviews[];
+  rentals: Rental[];
+  _count: {
+    rentals: number;
+    reviews: number;
+  };
 };
 
-type Reviews = {
+export type Reviews = {
+  id: string;
   comment: string;
   rating: number;
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+};
+
+type Rental = {
+  id: string;
+  quantity: number;
+  totalPrice: number;
+  startDate: string;
+  endDate: string;
+  status: string;
+  customerId: string;
+  createdAt: string;
 };
 
 export interface IGear {

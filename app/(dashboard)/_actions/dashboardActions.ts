@@ -202,3 +202,50 @@ export const deleteGear = async (gearId: string) => {
 
   return result;
 };
+
+export const updateGear = async (
+  gearId: string,
+  prevState: any,
+  formData: FormData,
+) => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  if (!accessToken) {
+    return { success: false, message: "You are not logged in!" };
+  }
+
+  const image = formData.get("image");
+  const title = formData.get("title");
+  const brand = formData.get("brand");
+  const categoryId = formData.get("category");
+  const pricePerDay = formData.get("pricePerDay");
+  const description = formData.get("description");
+  const stock = formData.get("stock");
+
+  const payload = {
+    title: title ? title : prevState.title,
+    brand: brand ? brand : prevState.brand,
+    categoryId: categoryId ? categoryId : prevState.categoryId,
+    pricePerDay: pricePerDay ? Number(pricePerDay) : prevState.pricePerDay,
+    description: description ? description : prevState.description,
+    stock: stock ? Number(stock) : prevState.stock,
+    image: image ? image : prevState.image,
+  };
+
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/gear/${gearId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await res.json();
+
+  revalidatePath("/provider-dashboard");
+  revalidatePath("/");
+
+  return result;
+};

@@ -18,13 +18,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Edit2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { addGear } from "../../_actions/dashboardActions";
+import { addGear, updateGear } from "../../_actions/dashboardActions";
+import { IProviderGear } from "../../_types/gearTypes";
 
-const AddGearModal = ({ categories }: { categories: any }) => {
+const AddGearModal = ({
+  categories,
+  isEditMode = false,
+  gear,
+}: {
+  categories: any;
+  isEditMode?: boolean;
+  gear?: IProviderGear;
+}) => {
   const [open, setOpen] = useState(false);
-  const [state, action, pending] = useActionState(addGear, false);
+  const actionGear = isEditMode
+    ? updateGear.bind(null, gear?.id as string)
+    : addGear;
+
+  const [state, action, pending] = useActionState(actionGear, false);
+  const router = useRouter();
 
   useEffect(() => {
     if (!state) return;
@@ -32,6 +48,7 @@ const AddGearModal = ({ categories }: { categories: any }) => {
     if (state.success) {
       const fn = () => {
         setOpen(false);
+        router.refresh();
       };
       fn();
       toast.success(state.message);
@@ -40,20 +57,36 @@ const AddGearModal = ({ categories }: { categories: any }) => {
     if (state.error) {
       toast.error(state.error);
     }
-  }, [state]);
+  }, [state, router]);
+
+  let description;
+
+  if (isEditMode && gear?.description) {
+    description = gear?.description;
+  } else {
+    description = "";
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <p className="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100 cursor-pointer">
-          Add Gear
-        </p>
+        {isEditMode ? (
+          <p className="p-1.5 hover:bg-gray-100 rounded text-gray-600 hover:text-gray-900 cursor-pointer">
+            <Edit2 size={16} />
+          </p>
+        ) : (
+          <p className="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100 cursor-pointer">
+            Add Gear
+          </p>
+        )}
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Add New Gear</DialogTitle>
+          <DialogTitle>{isEditMode ? "Edit Gear" : "Add Gear"}</DialogTitle>
           <DialogDescription>
-            Fill in the details to add a new gear item to your inventory
+            {isEditMode
+              ? "Edit your gear details"
+              : "Add a new gear to your inventory"}
           </DialogDescription>
         </DialogHeader>
 
@@ -66,6 +99,7 @@ const AddGearModal = ({ categories }: { categories: any }) => {
             <Input
               id="title"
               name="title"
+              defaultValue={isEditMode ? gear?.title : ""}
               placeholder="e.g., Camping Tent"
               className="border-gray-300"
             />
@@ -77,6 +111,7 @@ const AddGearModal = ({ categories }: { categories: any }) => {
             <Input
               id="description"
               name="description"
+              defaultValue={description || ""}
               placeholder="anything here..."
               className="border-gray-300"
             />
@@ -90,6 +125,7 @@ const AddGearModal = ({ categories }: { categories: any }) => {
             <Input
               id="brand"
               name="brand"
+              defaultValue={isEditMode ? gear?.brand : ""}
               placeholder="e.g., Coleman"
               className="border-gray-300"
             />
@@ -106,7 +142,10 @@ const AddGearModal = ({ categories }: { categories: any }) => {
               </SelectTrigger>
               <SelectContent>
                 {categories.map((category: any) => (
-                  <SelectItem key={category.id} value={category.id}>
+                  <SelectItem
+                    key={category.id}
+                    value={isEditMode ? gear?.categories.id : category.id}
+                  >
                     {category.name}
                   </SelectItem>
                 ))}
@@ -124,6 +163,7 @@ const AddGearModal = ({ categories }: { categories: any }) => {
                 id="pricePerDay"
                 name="pricePerDay"
                 type="number"
+                defaultValue={isEditMode ? gear?.pricePerDay : ""}
                 placeholder="70"
                 min="0"
                 step="0.01"
@@ -140,6 +180,7 @@ const AddGearModal = ({ categories }: { categories: any }) => {
                 name="stock"
                 type="number"
                 placeholder="400"
+                defaultValue={isEditMode ? gear?.stock : ""}
                 min="0"
                 className="border-gray-300"
               />
@@ -154,6 +195,7 @@ const AddGearModal = ({ categories }: { categories: any }) => {
               name="image"
               placeholder="https://example.com/image.jpg"
               className="border-gray-300"
+              defaultValue={isEditMode ? gear?.image : ""}
             />
           </div>
 
@@ -168,9 +210,16 @@ const AddGearModal = ({ categories }: { categories: any }) => {
             </button>
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white cursor-pointer"
+              disabled={pending}
+              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300"
             >
-              {pending ? "Adding..." : "Add Gear"}
+              {isEditMode
+                ? pending
+                  ? "Updating..."
+                  : "Update Gear"
+                : pending
+                  ? "Adding..."
+                  : "Add Gear"}
             </button>
           </div>
         </form>

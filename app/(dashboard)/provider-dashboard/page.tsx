@@ -127,7 +127,10 @@ const ProviderDashboard = async () => {
                         {revenue}
                       </td>
                       <td className="px-6 py-4">
-                        <GearActionButton gearId={gear.id} />
+                        <GearActionButton
+                          gear={gear}
+                          categories={categories.data}
+                        />
                       </td>
                     </tr>
                   );

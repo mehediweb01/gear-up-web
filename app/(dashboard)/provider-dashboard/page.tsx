@@ -1,15 +1,14 @@
-import {
-  DollarSign,
-  Edit2,
-  Package,
-  Plus,
-  Trash2,
-  TrendingUp,
-  Users,
-} from "lucide-react";
-import Link from "next/link";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getAllCategories } from "@/app/(gear)/_actions/categoryActions";
+import { Edit2, Trash2, TrendingUp, Users } from "lucide-react";
+import { incomingOrders } from "../_actions/dashboardActions";
+import AddGearModal from "../_components/provider/AddGearModal";
+import ResendOrders from "../_components/provider/ResendOrders";
 
-const ProviderDashboard = () => {
+const ProviderDashboard = async () => {
+  const result = await incomingOrders();
+  const categories = await getAllCategories();
+
   const inventory = [
     {
       id: 1,
@@ -40,44 +39,19 @@ const ProviderDashboard = () => {
     },
   ];
 
-  const orders = [
-    {
-      id: "ORD001",
-      customer: "John Doe",
-      gear: "Mountain Tent Pro",
-      status: "Pending Pickup",
-      date: "Dec 20, 2024",
-    },
-    {
-      id: "ORD002",
-      customer: "Jane Smith",
-      gear: "Carbon Kayak",
-      status: "In Rental",
-      date: "Dec 18, 2024",
-    },
-    {
-      id: "ORD003",
-      customer: "Bob Wilson",
-      gear: "Mountain Bike",
-      status: "Pending Return",
-      date: "Dec 15, 2024",
-    },
-  ];
+  const resentOrders = result.data.filter(
+    (order: any) => order.status !== "RETURNED",
+  );
+
+  const orders = resentOrders;
 
   const stats = [
-    {
-      label: "Monthly Revenue",
-      value: "$8,240",
-      icon: DollarSign,
-      color: "green",
-    },
-    { label: "Active Rentals", value: "9", icon: Package, color: "blue" },
     { label: "Gear Items", value: "12", icon: TrendingUp, color: "purple" },
-    { label: "New Bookings", value: "5", icon: Users, color: "orange" },
+    { label: "New Orders", value: orders.length, icon: Users, color: "orange" },
   ];
 
   return (
-    <>
+    <div className="mx-8 py-8">
       {/* Stats */}
       <div className="grid md:grid-cols-4 gap-6 mb-8">
         {stats.map((stat, idx) => {
@@ -113,12 +87,7 @@ const ProviderDashboard = () => {
             <h2 className="text-lg font-semibold text-gray-900">
               Inventory Management
             </h2>
-            <Link
-              href="/dashboard/provider/add-gear"
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
-            >
-              <Plus size={16} /> Add Gear
-            </Link>
+            <AddGearModal categories={categories.data} />
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -186,43 +155,9 @@ const ProviderDashboard = () => {
           </div>
         </div>
 
-        {/* Pending Orders */}
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden h-fit">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Recent Orders
-            </h2>
-          </div>
-          <div className="space-y-3 p-6">
-            {orders.map((order) => (
-              <div
-                key={order.id}
-                className="p-3 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <p className="font-medium text-gray-900 text-sm">
-                    {order.gear}
-                  </p>
-                  <span
-                    className={`text-xs font-medium px-2 py-1 rounded-full ${
-                      order.status === "Pending Pickup"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : order.status === "In Rental"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-orange-100 text-orange-800"
-                    }`}
-                  >
-                    {order.status}
-                  </span>
-                </div>
-                <p className="text-xs text-gray-600 mb-2">{order.customer}</p>
-                <p className="text-xs text-gray-500">{order.date}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ResendOrders orders={orders} />
       </div>
-    </>
+    </div>
   );
 };
 

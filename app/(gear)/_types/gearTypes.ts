@@ -26,7 +26,7 @@ export type TGear = {
   };
 };
 
-export type Reviews = {
+export type Reviews = { 
   id: string;
   comment: string;
   rating: number;

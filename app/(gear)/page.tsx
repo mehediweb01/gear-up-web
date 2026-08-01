@@ -1,13 +1,34 @@
+import { getAllCategories } from "./_actions/categoryActions";
 import { getAllGears } from "./_actions/gearActions";
 import GearGrid from "./_components/GearGrid";
 import SearchFilter from "./_components/SearchFilter";
 
-const HomePage = async () => {
-  const gears = await getAllGears();
+type Props = {
+  searchParams: Promise<{
+    brand?: string;
+    searchTerm?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    category?: string;
+  }>;
+};
+
+const HomePage = async ({ searchParams }: Props) => {
+  const params = await searchParams;
+
+  const query = {
+    searchTerm: params.searchTerm,
+    minPrice: params.minPrice,
+    maxPrice: params.maxPrice,
+    category: params.category,
+  };
+
+  const gears = await getAllGears(query);
+  const categories = await getAllCategories();
 
   return (
     <main className="min-h-screen bg-white">
-      <SearchFilter />
+      <SearchFilter categories={categories} />
       <GearGrid gears={gears} />
     </main>
   );

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getAllCategories } from "@/app/(gear)/_actions/categoryActions";
-import { Edit2, Trash2, TrendingUp, Users } from "lucide-react";
+import { TrendingUp, Users } from "lucide-react";
 import { getProviderGears, incomingOrders } from "../_actions/dashboardActions";
 import AddGearModal from "../_components/provider/AddGearModal";
+import GearActionButton from "../_components/provider/GearActionButton";
 import ResendOrders from "../_components/provider/ResendOrders";
 import { IProviderGear } from "../_types/gearTypes";
 
@@ -126,14 +127,7 @@ const ProviderDashboard = async () => {
                         {revenue}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex gap-2">
-                          <button className="p-1.5 hover:bg-gray-100 rounded text-gray-600 hover:text-gray-900">
-                            <Edit2 size={16} />
-                          </button>
-                          <button className="p-1.5 hover:bg-gray-100 rounded text-gray-600 hover:text-red-600">
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
+                        <GearActionButton gearId={gear.id} />
                       </td>
                     </tr>
                   );

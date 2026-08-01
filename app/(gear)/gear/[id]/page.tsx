@@ -1,3 +1,4 @@
+import { getMe } from "@/service/getMe";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +18,7 @@ const GearDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
   const gear: IGear = await getSingleGearDetails(id);
+  const user = await getMe();
 
   const totalRating = gear?.data?.reviews?.reduce(
     (acc, curr) => acc + curr.rating,
@@ -115,7 +117,7 @@ const GearDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
                 Stock: {gear.data.stock}
               </p>
 
-              <OrderForm />
+              <OrderForm gearId={gear.data.id} user={user} />
             </div>
 
             {/* Description */}

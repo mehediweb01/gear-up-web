@@ -164,3 +164,22 @@ export const addGear = async (prevState: any, formData: FormData) => {
 
   return result;
 };
+
+export const getProviderGears = async () => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/gear/provider/my-gears`,
+    {
+      method: "GET",
+      headers: {
+        Cookie: `accessToken=${accessToken}`,
+      },
+    },
+  );
+
+  const result = await res.json();
+
+  return result;
+};

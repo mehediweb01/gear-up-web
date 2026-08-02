@@ -28,6 +28,20 @@ const ProviderDashboard = async () => {
       color: "purple",
     },
     { label: "New Orders", value: orders.length, icon: Users, color: "orange" },
+    {
+      label: "Success Orders",
+      value: result.data.filter((order: any) => order.status === "RETURNED")
+        .length,
+      icon: Users,
+      color: "green",
+    },
+    {
+      label: "Cancelled Orders",
+      value: result.data.filter((order: any) => order.status === "CANCELLED")
+        .length,
+      icon: Users,
+      color: "red",
+    },
   ];
 
   return (

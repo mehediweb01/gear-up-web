@@ -48,10 +48,7 @@ export const getAllGears = async ({
 export const getSingleGearDetails = async (id: string) => {
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/gear/${id}`, {
     method: "GET",
-    cache: "force-cache",
-    next: {
-      revalidate: 60 * 60 * 12,
-    },
+    cache: "no-store",
   });
 
   const result = await res.json();

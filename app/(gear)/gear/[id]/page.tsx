@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { getSingleGearDetails } from "../../_actions/gearActions";
+import ReviewCreateModal from "../../_components/CreatedReview";
 import OrderForm from "../../_components/OrderForm";
 import Review from "../../_components/Review";
 import { TGear } from "../../_types/gearTypes";
@@ -25,6 +26,14 @@ const GearDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
     0,
   );
   const rating = totalRating / gear?.data?.reviews?.length;
+
+  const isReviewAllowed =
+    gear?.data?.rentals.some(
+      (rental) =>
+        rental.customerId === user.data.id &&
+        rental.status === "RETURNED" &&
+        user.data.status === "ACTIVE",
+    ) ?? false;
 
   return (
     <main className="min-h-screen bg-white">
@@ -81,6 +90,7 @@ const GearDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
                 ))}
               </div>
               <span className="text-gray-600">{rating || 0}</span>
+              {isReviewAllowed && <ReviewCreateModal gearId={gear.data.id} />}
             </div>
 
             {/* Provider Info */}

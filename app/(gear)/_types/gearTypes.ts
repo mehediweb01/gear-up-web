@@ -26,11 +26,13 @@ export type TGear = {
   };
 };
 
-export type Reviews = { 
+export type Reviews = {
   id: string;
   comment: string;
   rating: number;
+  customerId: string;
   customer: {
+    id: string;
     name: string;
     email: string;
     phone: string;
@@ -46,6 +48,13 @@ type Rental = {
   endDate: string;
   status: string;
   customerId: string;
+  customer: {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
   createdAt: string;
 };
 

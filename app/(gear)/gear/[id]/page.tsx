@@ -106,7 +106,7 @@ const GearDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
             <div className="border-b border-t border-gray-200 py-6 mb-6">
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-4xl font-bold text-gray-900">
-                  ${gear.data.pricePerDay}
+                  {gear.data.pricePerDay}৳
                 </span>
                 <span className="text-gray-600">/day</span>
               </div>

@@ -72,7 +72,7 @@ const GearGrid = ({ gears }: GearsProps) => {
                     <div className="flex items-center justify-between mt-auto">
                       <div>
                         <span className="text-lg font-bold text-gray-900">
-                          ${item.pricePerDay}
+                          {item.pricePerDay}৳
                         </span>
                         <span className="text-xs text-gray-600">/day</span>
                       </div>

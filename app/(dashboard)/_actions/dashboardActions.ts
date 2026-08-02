@@ -13,6 +13,10 @@ export const getAllUsers = async () => {
     headers: {
       Cookie: `accessToken=${accessToken}`,
     },
+    cache: "no-cache",
+    next: {
+      revalidate: 0,
+    },
   });
 
   const result = await res.json();
@@ -33,6 +37,10 @@ export const changeUserStatus = async (userId: string, status: string) => {
         Cookie: `accessToken=${accessToken}`,
       },
       body: JSON.stringify({ status }),
+      cache: "no-cache",
+      next: {
+        revalidate: 0,
+      },
     },
   );
 
@@ -49,6 +57,10 @@ export const getUserOrders = async () => {
     method: "GET",
     headers: {
       Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "force-cache",
+    next: {
+      revalidate: 60 * 60 * 12,
     },
   });
 
@@ -91,6 +103,10 @@ export const incomingOrders = async () => {
       headers: {
         Cookie: `accessToken=${accessToken}`,
       },
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60 * 12,
+      },
     },
   );
 
@@ -112,6 +128,10 @@ export const updateOrderStatus = async (orderId: string, status: string) => {
         Cookie: `accessToken=${accessToken}`,
       },
       body: JSON.stringify({ status }),
+      cache: "no-cache",
+      next: {
+        revalidate: 0,
+      },
     },
   );
 
@@ -155,6 +175,10 @@ export const addGear = async (prevState: any, formData: FormData) => {
       Cookie: `accessToken=${accessToken}`,
     },
     body: JSON.stringify(payload),
+    cache: "no-cache",
+    next: {
+      revalidate: 0,
+    },
   });
 
   const result = await res.json();
@@ -176,6 +200,10 @@ export const getProviderGears = async () => {
       headers: {
         Cookie: `accessToken=${accessToken}`,
       },
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60 * 12,
+      },
     },
   );
 
@@ -192,6 +220,10 @@ export const deleteGear = async (gearId: string) => {
     method: "DELETE",
     headers: {
       Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-cache",
+    next: {
+      revalidate: 0,
     },
   });
 
@@ -240,6 +272,10 @@ export const updateGear = async (
       Cookie: `accessToken=${accessToken}`,
     },
     body: JSON.stringify(payload),
+    cache: "no-cache",
+    next: {
+      revalidate: 0,
+    },
   });
 
   const result = await res.json();

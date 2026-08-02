@@ -65,7 +65,7 @@ const OrderRentalDetails = ({ order }: { order: Props }) => {
                 Price per Day
               </p>
               <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                ${order.gear.pricePerDay}
+                {order.gear.pricePerDay}৳
               </p>
             </div>
           </div>

@@ -111,7 +111,7 @@ const ProviderDashboard = async () => {
                         {gear.title}
                       </td>
                       <td className="px-6 py-4 text-gray-700">
-                        ${gear.pricePerDay}/day
+                        {gear.pricePerDay}৳/day
                       </td>
                       <td className="px-6 py-4">
                         <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">

@@ -157,7 +157,7 @@ const AddGearModal = ({
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="pricePerDay">
-                Price Per Day ($) <span className="text-red-500">*</span>
+                Price Per Day (৳) <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="pricePerDay"

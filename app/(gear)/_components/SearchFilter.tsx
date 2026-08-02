@@ -120,10 +120,10 @@ const SearchFilter = ({ categories }: { categories: ICategory }) => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white cursor-pointer"
             >
               <option value="">All Prices</option>
-              <option value="0-25">$0 - $25</option>
-              <option value="25-50">$25 - $50</option>
-              <option value="50-100">$50 - $100</option>
-              <option value="100-">$100+</option>
+              <option value="0-25">0৳ - 25৳</option>
+              <option value="25-50">25৳ - 50৳</option>
+              <option value="50-100">50৳ - 100৳</option>
+              <option value="100-">100৳+</option>
             </select>
           </div>
         </div>

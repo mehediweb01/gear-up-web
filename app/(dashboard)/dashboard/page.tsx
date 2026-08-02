@@ -99,7 +99,7 @@ const CustomerDashboard = async () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                    ${order.totalPrice}
+                    {order.totalPrice}৳
                   </td>
                   <td className="px-6 py-4 text-sm">
                     <Link

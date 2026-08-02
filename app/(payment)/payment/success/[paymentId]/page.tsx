@@ -66,7 +66,7 @@ const PaymentSuccessPage = async ({
               <div>
                 <p className="text-sm text-gray-600 mb-1">Total Amount</p>
                 <p className="text-3xl font-bold text-gray-900">
-                  ${paymentData.amount}
+                  {paymentData.amount}৳
                 </p>
               </div>
               <div>
@@ -126,7 +126,7 @@ const PaymentSuccessPage = async ({
                     <div>
                       <p className="text-gray-600">Per Day</p>
                       <p className="font-semibold text-gray-900">
-                        ${paymentData.rentals.gear.pricePerDay}
+                        {paymentData.rentals.gear.pricePerDay}৳
                       </p>
                     </div>
                     <div>

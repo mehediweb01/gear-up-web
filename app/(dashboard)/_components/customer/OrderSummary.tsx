@@ -16,19 +16,19 @@ const OrderSummary = ({ totalPrice }: { totalPrice: number }) => {
             <div className="flex justify-between">
               <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
               <span className="font-medium text-gray-900 dark:text-white">
-                ${totalPrice}
+                {totalPrice}৳
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600 dark:text-gray-400">Tax</span>
               <span className="font-medium text-gray-900 dark:text-white">
-                $0.00
+                0.00৳
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600 dark:text-gray-400">Shipping</span>
               <span className="font-medium text-gray-900 dark:text-white">
-                $0.00
+                0.00৳
               </span>
             </div>
           </div>
@@ -37,7 +37,7 @@ const OrderSummary = ({ totalPrice }: { totalPrice: number }) => {
               Total
             </span>
             <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-              ${totalPrice}
+              {totalPrice}৳
             </span>
           </div>
         </CardContent>

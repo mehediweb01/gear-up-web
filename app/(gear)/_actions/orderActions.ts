@@ -50,6 +50,10 @@ export const createOrder = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
+    cache: "no-cache",
+    next: {
+      revalidate: 0,
+    },
   });
 
   const result = await res.json();

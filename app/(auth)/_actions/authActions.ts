@@ -49,8 +49,6 @@ export const loginAction = async (prevState: any, formData: FormData) => {
       sameSite: "lax",
       maxAge: 60 * 60 * 24,
     });
-
-    redirect("/");
   }
 
   return result;

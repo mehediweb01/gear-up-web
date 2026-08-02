@@ -1,3 +1,4 @@
+import jwt, { JwtPayload } from "jsonwebtoken";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -21,6 +22,27 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+  const user = accessToken
+    ? (jwt.verify(
+        accessToken,
+        process.env.JWT_ACCESS_SECRET as string,
+      ) as JwtPayload)
+    : null;
+
+  if (user && isAuthRoute) {
+    switch (user.role) {
+      case "CUSTOMER":
+        return NextResponse.redirect(new URL("/", request.url));
+
+      case "PROVIDER":
+        return NextResponse.redirect(
+          new URL("/provider-dashboard", request.url),
+        );
+
+      case "ADMIN":
+        return NextResponse.redirect(new URL("/admin-dashboard", request.url));
+    }
+  }
   return NextResponse.next();
 }
 

@@ -1,24 +1,50 @@
 "use client";
 
+import { getMe } from "@/service/getMe";
 import { Lock, Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import { loginAction } from "../../_actions/authActions";
 
 const LoginForm = () => {
   const [state, action, pending] = useActionState(loginAction, false);
+  const router = useRouter();
 
   useEffect(() => {
     if (!state) return;
 
     if (state.success) {
       toast.success(state.message || "Successfully logged in");
+
+      async function fn() {
+        const me = await getMe();
+
+        switch (me.data.role) {
+          case "ADMIN":
+            router.push("/admin-dashboard");
+            break;
+
+          case "PROVIDER":
+            router.push("/provider-dashboard");
+            break;
+
+          case "CUSTOMER":
+            router.push("/");
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      fn();
     }
 
     if (!state.success) {
       toast.error(state.message || "Something went wrong");
     }
-  }, [state]);
+  }, [state, router]);
 
   return (
     <form className="space-y-4" action={action}>

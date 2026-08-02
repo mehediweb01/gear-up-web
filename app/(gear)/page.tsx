@@ -13,6 +13,8 @@ type Props = {
   }>;
 };
 
+export const revalidate = 0;
+
 const HomePage = async ({ searchParams }: Props) => {
   const params = await searchParams;
 

@@ -19,7 +19,14 @@ const GearDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
   const gear: IGear = await getSingleGearDetails(id);
-  const user = await getMe();
+
+  let user = null;
+
+  try {
+    user = await getMe();
+  } catch {
+    user = null;
+  }
 
   const totalRating = gear?.data?.reviews?.reduce(
     (acc, curr) => acc + curr.rating,
@@ -28,12 +35,14 @@ const GearDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
   const rating = totalRating / gear?.data?.reviews?.length;
 
   const isReviewAllowed =
-    gear?.data?.rentals.some(
-      (rental) =>
-        rental.customerId === user.data.id &&
-        rental.status === "RETURNED" &&
-        user.data.status === "ACTIVE",
-    ) ?? false;
+    (user &&
+      gear?.data?.rentals.some(
+        (rental) =>
+          rental.customerId === user?.data?.id &&
+          rental.status === "RETURNED" &&
+          user.data.status === "ACTIVE",
+      )) ??
+    false;
 
   return (
     <main className="min-h-screen bg-white">

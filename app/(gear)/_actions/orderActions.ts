@@ -26,7 +26,10 @@ export const createOrder = async (
   const { user, gearId } = otherData;
 
   if (!user || user?.data?.status !== "ACTIVE") {
-    redirect("/login");
+     return {
+       success: false,
+       message: "Please login to place an order.",
+     };
   }
 
   const payload = {
